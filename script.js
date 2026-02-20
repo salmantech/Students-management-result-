@@ -1,59 +1,55 @@
-const students = [
-    {
-        roll: "101",
-        name: "Rahul",
-        s1: 85,
-        s2: 78,
-        s3: 92
-    },
-    {
-        roll: "102",
-        name: "Aisha",
-        s1: 88,
-        s2: 90,
-        s3: 84
-    },
-    {
-        roll: "103",
-        name: "Arjun",
-        s1: 70,
-        s2: 65,
-        s3: 75
-    }
-];
 
-function showResult() {
-    const rollInput = document.getElementById("rollInput").value;
-    const resultBox = document.getElementById("resultBox");
-    const error = document.getElementById("error");
+function generateInputs() {
+    let count = document.getElementById("subjectCount").value;
+    let container = document.getElementById("marksContainer");
+    container.innerHTML = "";
 
-    const student = students.find(s => s.roll === rollInput);
-
-    if (!student) {
-        resultBox.classList.add("hidden");
-        error.textContent = "Roll number not found!";
+    if (count <= 0) {
+        alert("Enter valid subject number");
         return;
     }
 
-    error.textContent = "";
+    for (let i = 1; i <= count; i++) {
+        container.innerHTML += `
+            <div class="subject-row">
+                <input type="number" placeholder="Max Mark ${i}" class="max">
+                <input type="number" placeholder="Mark Obtained ${i}" class="obtained">
+            </div>
+        `;
+    }
+}
 
-    const total = student.s1 + student.s2 + student.s3;
-    const avg = total / 3;
-    let grade;
+function calculateResult() {
+    let name = document.getElementById("name").value;
+    let maxMarks = document.querySelectorAll(".max");
+    let obtainedMarks = document.querySelectorAll(".obtained");
 
-    if (avg >= 90) grade = "A+";
-    else if (avg >= 75) grade = "A";
-    else if (avg >= 60) grade = "B";
-    else grade = "C";
+    let totalMax = 0;
+    let totalObtained = 0;
 
-    document.getElementById("name").textContent = student.name;
-    document.getElementById("roll").textContent = student.roll;
-    document.getElementById("s1").textContent = student.s1;
-    document.getElementById("s2").textContent = student.s2;
-    document.getElementById("s3").textContent = student.s3;
-    document.getElementById("total").textContent = total;
-    document.getElementById("avg").textContent = avg.toFixed(2);
-    document.getElementById("grade").textContent = grade;
+    for (let i = 0; i < maxMarks.length; i++) {
+        totalMax += Number(maxMarks[i].value);
+        totalObtained += Number(obtainedMarks[i].value);
+    }
 
-    resultBox.classList.remove("hidden");
+    let percentage = (totalObtained / totalMax) * 100;
+    let average = totalObtained / maxMarks.length;
+
+    let grade = "";
+
+    if (percentage >= 90) grade = "A+";
+    else if (percentage >= 80) grade = "A";
+    else if (percentage >= 70) grade = "B";
+    else if (percentage >= 60) grade = "C";
+    else if (percentage >= 50) grade = "D";
+    else grade = "F";
+
+    document.getElementById("resultBox").innerHTML = `
+        <h3>Result</h3>
+        Name: ${name} <br>
+        Total Marks: ${totalObtained} / ${totalMax} <br>
+        Average: ${average.toFixed(2)} <br>
+        Percentage: ${percentage.toFixed(2)}% <br>
+        Grade: <b>${grade}</b>
+    `;
 }
