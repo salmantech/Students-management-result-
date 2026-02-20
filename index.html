@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Result Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Student Result Management System</h1>
+    <p>Enter your Roll Number to view result</p>
+
+    <input type="text" id="rollInput" placeholder="Enter Roll Number">
+    <button onclick="showResult()">View Result</button>
+
+    <div id="resultBox" class="hidden">
+        <h2>Student Result</h2>
+        <p><strong>Name:</strong> <span id="name"></span></p>
+        <p><strong>Roll No:</strong> <span id="roll"></span></p>
+        <p><strong>Subject 1:</strong> <span id="s1"></span></p>
+        <p><strong>Subject 2:</strong> <span id="s2"></span></p>
+        <p><strong>Subject 3:</strong> <span id="s3"></span></p>
+        <p><strong>Total:</strong> <span id="total"></span></p>
+        <p><strong>Average:</strong> <span id="avg"></span></p>
+        <p><strong>Grade:</strong> <span id="grade"></span></p>
+    </div>
+
+    <p id="error" class="error"></p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
